@@ -109,7 +109,10 @@ public class Jsr303Validator implements Validator {
     public void validate(String methodName, String[] parameterTypes, Object[] arguments) throws Exception {
         String methodClassName = clazz.getName() + "_" + toUpperMethodName(methodName);
         Class<?> methodClass = null;
-        methodClass = ClassUtils.forName(methodClassName, false);
+        try {
+            methodClass = ClassUtils.forName(methodClassName, false);
+        } catch (Exception e) {
+        }
         Set<ConstraintViolation<?>> violations = new HashSet<ConstraintViolation<?>>();
         Method method = ReflectUtils.getMethod(className, methodName, parameterTypes);
         //clazz.getMethod(methodName, parameterTypes);
